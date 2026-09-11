@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_DB: velozity
+      POSTGRES_USER: velozity
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U velozity -d velozity]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+    restart: unless-stopped
+  api:
+    build: .
+    environment:
+      # Local Compose uses HTTP. Production requires NODE_ENV=production and HTTPS.
+      NODE_ENV: development
+      PORT: 4000
+      DATABASE_URL: postgresql://velozity:${POSTGRES_PASSWORD}@db:5432/velozity
+      APP_ORIGIN: ${APP_ORIGIN:-http://localhost:8080}
+      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET:?Set ACCESS_TOKEN_SECRET}
+      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET:?Set REFRESH_TOKEN_SECRET}
+      SEED_PASSWORD: ${SEED_PASSWORD:?Set SEED_PASSWORD}
+      COOKIE_SAME_SITE: lax
+      TRUST_PROXY: 1
+    depends_on:
+      db:
+        condition: service_healthy
+    command: [sh, -c, 'node dist/db/migrate.js && node dist/server.js']
+    restart: unless-stopped
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - '8080:80'
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  postgres-data:

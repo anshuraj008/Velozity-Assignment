@@ -1,0 +1,34 @@
+{
+  "name": "velozity-workspace",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "npm run build -w @velozity/shared && concurrently -k -n api,web \"npm run dev -w @velozity/server\" \"npm run dev -w @velozity/web\"",
+    "build": "npm run build -w @velozity/shared && npm run build -w @velozity/server && npm run build -w @velozity/web",
+    "typecheck": "npm run build -w @velozity/shared && npm run typecheck --workspaces --if-present",
+    "test": "npm run build -w @velozity/shared && npm run test -w @velozity/server",
+    "db:migrate": "npm run db:migrate -w @velozity/server",
+    "db:seed": "npm run db:seed -w @velozity/server",
+    "start": "npm run start -w @velozity/server",
+    "setup:local": "node scripts/setup-local.mjs",
+    "db:local": "node scripts/local-db.mjs",
+    "test:postgres": "node scripts/test-postgres.mjs",
+    "test:e2e": "playwright test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "concurrently": "^9.2.1",
+    "embedded-postgres": "^18.4.0-beta.17",
+    "prettier": "^3.9.6",
+    "typescript": "~5.9.3"
+  }
+}
