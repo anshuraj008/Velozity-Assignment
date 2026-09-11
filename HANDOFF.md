@@ -73,10 +73,13 @@ Last updated: 2026-09-11
 - Confirmed the existing user endpoints remain Admin-only and deactivation is a soft `is_active=false` update; historical user records are not deleted.
 - Completed the notification feature: enriched notification responses with task/project and latest activity context, added optimistic individual/mark-all read updates in the bell modal, added `View all notifications`, and added the full `/notifications` page in `apps/web/src/pages/notifications.tsx`.
 - Notification access and read mutations remain authenticated to the current user; existing Socket.IO `notifications` sync invalidation provides realtime refresh without polling.
+- Kept the realtime sidebar state truthful in `apps/web/src/components/shell.tsx` and `apps/web/src/styles.css`: connected sockets show a filled green dot and `Workspace is live`; disconnected sockets show a hollow amber dot and `Reconnecting...`.
+- Confirmed reconnect catch-up remains database-backed: `LiveProvider` requests `/activities/catchup?after=<cursor>` after each successful socket connection, while the server returns the latest 20 permitted activity records from PostgreSQL.
 - Task drawer change verified with Prettier, full `npm run typecheck`, and the developer realtime Playwright workflow: 1 test passed. `npm test` reached Vitest but the Windows process crashed with a native out-of-memory error before tests executed; rerun when system memory is available.
 - Client search verified with Prettier and full `npm run typecheck`. The updated client/project browser workflow reached client cleanup but timed out while the existing delete request remained in `Saving...`; the screenshot confirmed search and the new project-tab navigation had already passed.
 - Team member modal copy verified with Prettier, full `npm run typecheck`, and source diagnostics. Backend authorization and soft-deactivation behavior were verified by inspection of the existing Admin-only routes and service logic.
 - Notifications verified with Prettier, full `npm run typecheck`, and the admin browser workflow covering the notification modal: 1 test passed.
+- Live-state copy verified with Prettier, full `npm run typecheck`, and the admin realtime browser workflow: 1 test passed.
 - Docker is not installed; container execution and external deployment have not been verified. No pushes or external deployments have been made.
 
 ## Future checkpoint contents

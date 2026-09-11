@@ -110,7 +110,7 @@ export function Shell() {
         <div className="sidebar-bottom">
           <div className="workspace-note">
             <span className={`connection-dot ${live.connected ? 'online' : ''}`} />
-            <strong>{live.connected ? 'Workspace is live' : 'Connecting to workspace'}</strong>
+            <strong>{live.connected ? 'Workspace is live' : 'Reconnecting...'}</strong>
             <p>
               {live.connected
                 ? 'Changes stay in sync with your team.'
