@@ -52,43 +52,47 @@ All demo accounts use the same default password:
 
 > **Password for all accounts:** `FlowDesk@2026`
 
-| Role                | Name            | Email                  | Password        |
-| :------------------ | :-------------- | :--------------------- | :-------------- |
-| **Admin**           | Workspace Admin | `admin@velozity.test`  | `FlowDesk@2026` |
-| **Project Manager** | Maya Lin        | `maya@velozity.test`   | `FlowDesk@2026` |
-| **Project Manager** | James Wilson    | `james@velozity.test`  | `FlowDesk@2026` |
-| **Developer**       | Arjun Mehta     | `arjun@velozity.test`  | `FlowDesk@2026` |
-| **Developer**       | Sofia Rossi     | `sofia@velozity.test`  | `FlowDesk@2026` |
-| **Developer**       | Ankita Sharma   | `ankita@velozity.test` | `FlowDesk@2026` |
-| **Developer**       | Priya Patel     | `priya@velozity.test`  | `FlowDesk@2026` |
+| Role            | Email                  |
+| --------------- | ---------------------- |
+| Admin           | `admin@velozity.test`  |
+| Project Manager | `maya@velozity.test`   |
+| Project Manager | `james@velozity.test`  |
+| Developer       | `arjun@velozity.test`  |
+| Developer       | `sofia@velozity.test`  |
+| Developer       | `ankita@velozity.test` |
+| Developer       | `priya@velozity.test`  |
 
 _Note: New user passwords must have at least 8 characters including uppercase, lowercase, number, and a special symbol._
 
 ---
 
-## 👥 Role Permissions Overview
+## Access rules
 
-| Feature                                           |      Admin      | Project Manager |     Developer     |
-| :------------------------------------------------ | :-------------: | :-------------: | :---------------: |
-| **Manage Team Members** (Add / Edit / Deactivate) |     ✅ Yes      | ❌ (View only)  |       ❌ No       |
-| **Manage Clients** (Add / Edit / Delete)          |     ✅ Yes      | ❌ (View only)  |       ❌ No       |
-| **Manage Projects** (Create / Edit / Delete)      | ✅ All Projects | ✅ Own Projects |       ❌ No       |
-| **Create & Assign Tasks**                         | ✅ All Projects | ✅ Own Projects |       ❌ No       |
-| **Update Task Status** (`TODO` ➔ `DONE`)          |  ✅ All Tasks   | ✅ Own Projects | ✅ Assigned Tasks |
-| **Live Activity Feed & Notifications**            |  ✅ All Events  | ✅ Own Projects | ✅ Assigned Tasks |
-| **Live Online Users Counter**                     |     ✅ Yes      |      ❌ No      |       ❌ No       |
+| Capability                  | Admin                    | Project manager           | Developer                     |
+| --------------------------- | ------------------------ | ------------------------- | ----------------------------- |
+| Manage users and clients    | All                      | View team and client list | No                            |
+| Read projects               | All                      | Created by that manager   | Projects with assigned tasks  |
+| Create/edit/delete projects | All                      | Create and manage own     | No                            |
+| Create/assign/edit tasks    | All                      | Within own projects       | No                            |
+| Change task status          | All                      | Within own projects       | Assigned tasks only           |
+| Activity and catch-up       | All workspace events     | Events in own projects    | Events on assigned tasks only |
+| Notifications               | Own inbox                | Own inbox                 | Own inbox                     |
+| Online-user count           | Live distinct-user count | No                        | No                            |
 
 ---
 
-## 🛠️ Helpful Commands
+## Commands
 
-| Command             | What it does                                                    |
-| :------------------ | :-------------------------------------------------------------- |
-| `npm run dev`       | Starts both frontend (`5173`) and backend (`4000`) concurrently |
-| `npm run typecheck` | Checks TypeScript types across the entire project               |
-| `npm test`          | Runs the automated integration tests (26 test cases)            |
-| `npm run test:e2e`  | Runs Playwright end-to-end browser tests                        |
-| `npm run build`     | Builds the production bundle for client and server              |
+| Command             | Purpose                                                                 |
+| ------------------- | ----------------------------------------------------------------------- |
+| `npm run dev`       | Starts both frontend (`5173`) and API (`4000`) dev servers concurrently |
+| `npm run build`     | Type-check and compile shared package, server, and client               |
+| `npm run typecheck` | Run TypeScript verification across all workspaces                       |
+| `npm test`          | Run integration test suite using isolated PostgreSQL                    |
+| `npm run test:e2e`  | Run Playwright end-to-end browser workflows                             |
+| `npm run db:migrate`| Apply database schema migrations                                        |
+| `npm run db:seed`   | Populate database with demo users, projects, and tasks                  |
+| `npm start`         | Run compiled production server                                          |
 
 ---
 
