@@ -34,6 +34,8 @@ Last updated: 2026-09-11
 - No server or shared-contract changes were needed. Admin and developer dashboard metrics remain unchanged.
 - Upgraded the shared full Activity page in `apps/web/src/components/activity.tsx` with a visible LIVE/OFFLINE state and working project, user, and status-change filters. Compact dashboard and project activity feeds continue using the same component.
 - Activity permissions remain backend-controlled through the existing authenticated `activityFeed(user, ...)` query; no separate role-specific Activity pages were added.
+- Reworked `apps/web/src/pages/projects.tsx` project details into a tabbed Overview, Tasks, and Activity experience. Overview now shows project health, client context, completion percentage, task summary, developer team, upcoming tasks, and recent activity while reusing existing APIs/components.
+- Added responsive project-detail styling in `apps/web/src/styles.css` and updated the project-detail E2E flow to assert the overview sections before opening Tasks.
 
 ## Verification
 
@@ -63,6 +65,7 @@ Last updated: 2026-09-11
 - Verified: `npm run typecheck`, `npm run build`, and `npm test` (26/26 tests passed).
 - PM dashboard change verified with `npm run typecheck -w @velozity/web`, source diagnostics, and the Maya mobile Playwright workflow: 1 test passed.
 - Activity page change verified with web typecheck, Prettier, source diagnostics, and the admin Activity browser workflow: 1 test passed.
+- Project detail change verified with Prettier, `npm run typecheck -w @velozity/web`, and the strengthened admin project-detail browser workflow: 1 test passed.
 - Docker is not installed; container execution and external deployment have not been verified. No pushes or external deployments have been made.
 
 ## Future checkpoint contents

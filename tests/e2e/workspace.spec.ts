@@ -23,6 +23,11 @@ test('admin dashboard, project detail, URL filters, notifications, and logout', 
   await page.getByRole('link', { name: 'Projects', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Projects', exact: true })).toBeVisible();
   await page.locator('.project-card').first().click();
+  await expect(page.getByText('PROJECT SUMMARY', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Team', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Upcoming tasks', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Recent activity', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Tasks', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Project tasks' })).toBeVisible();
   await page.getByRole('link', { name: 'Tasks', exact: true }).click();
   await page.getByLabel('Filter by priority').selectOption('HIGH');
