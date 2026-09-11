@@ -83,16 +83,16 @@ _Note: New user passwords must have at least 8 characters including uppercase, l
 
 ## Commands
 
-| Command             | Purpose                                                                 |
-| ------------------- | ----------------------------------------------------------------------- |
-| `npm run dev`       | Starts both frontend (`5173`) and API (`4000`) dev servers concurrently |
-| `npm run build`     | Type-check and compile shared package, server, and client               |
-| `npm run typecheck` | Run TypeScript verification across all workspaces                       |
-| `npm test`          | Run integration test suite using isolated PostgreSQL                    |
-| `npm run test:e2e`  | Run Playwright end-to-end browser workflows                             |
-| `npm run db:migrate`| Apply database schema migrations                                        |
-| `npm run db:seed`   | Populate database with demo users, projects, and tasks                  |
-| `npm start`         | Run compiled production server                                          |
+| Command              | Purpose                                                                 |
+| -------------------- | ----------------------------------------------------------------------- |
+| `npm run dev`        | Starts both frontend (`5173`) and API (`4000`) dev servers concurrently |
+| `npm run build`      | Type-check and compile shared package, server, and client               |
+| `npm run typecheck`  | Run TypeScript verification across all workspaces                       |
+| `npm test`           | Run integration test suite using isolated PostgreSQL                    |
+| `npm run test:e2e`   | Run Playwright end-to-end browser workflows                             |
+| `npm run db:migrate` | Apply database schema migrations                                        |
+| `npm run db:seed`    | Populate database with demo users, projects, and tasks                  |
+| `npm start`          | Run compiled production server                                          |
 
 ---
 

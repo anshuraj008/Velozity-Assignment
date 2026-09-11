@@ -18,18 +18,18 @@ Deploy the root Dockerfile to a host supporting a continuously running Node cont
 
 Run migrations as a release step: `node dist/db/migrate.js` from `/app/apps/server` in the API image. Start with the default `node dist/server.js`. Use `/api/health` for health checks. Run `node dist/db/seed.js` once against a new, explicitly designated demo database.
 
-| Variable               | Configuration                                                                              |
-| ---------------------- | ------------------------------------------------------------------------------------------ |
-| `NODE_ENV`             | `production`                                                                               |
-| `PORT`                 | Host port, normally 4000; expose it through the service                                    |
-| `DATABASE_URL`         | PostgreSQL URL with provider TLS; use `sslmode=verify-full` for certificate validation     |
-| `APP_ORIGIN`           | Exact public frontend HTTPS origin, e.g. `https://workspace.example.com`                   |
-| `ACCESS_TOKEN_SECRET`  | Random secret, at least 32 characters                                                      |
-| `REFRESH_TOKEN_SECRET` | Different random secret, at least 32 characters                                            |
-| `COOKIE_SAME_SITE`     | `lax` for same-site frontend/API; `none` only for cross-site HTTPS deployments             |
-| `TRUST_PROXY`          | Exact number of trusted proxies in front of Express; normally 1 for a single managed proxy |
-| `LOG_LEVEL`            | `info`                                                                                     |
-| `SEED_PASSWORD`        | Demo-only password used during seed; at least 12 characters                                |
+| Variable               | Configuration                                                                                        |
+| ---------------------- | ---------------------------------------------------------------------------------------------------- |
+| `NODE_ENV`             | `production`                                                                                         |
+| `PORT`                 | Host port, normally 4000; expose it through the service                                              |
+| `DATABASE_URL`         | PostgreSQL URL with provider TLS; use `sslmode=verify-full` for certificate validation               |
+| `APP_ORIGIN`           | Exact public frontend HTTPS origin, e.g. `https://workspace.example.com`                             |
+| `ACCESS_TOKEN_SECRET`  | Random secret, at least 32 characters                                                                |
+| `REFRESH_TOKEN_SECRET` | Different random secret, at least 32 characters                                                      |
+| `COOKIE_SAME_SITE`     | `lax` for same-site frontend/API; `none` only for cross-site HTTPS deployments                       |
+| `TRUST_PROXY`          | Exact number of trusted proxies in front of Express; normally 1 for a single managed proxy           |
+| `LOG_LEVEL`            | `info`                                                                                               |
+| `SEED_PASSWORD`        | Demo-only password used during seed; at least 8 characters with lowercase, uppercase, number, symbol |
 
 Prefer same-site HTTPS domains such as `workspace.example.com` and `api.example.com`. Separate provider domains require `SameSite=None; Secure`, and browsers that block third-party cookies may still block refresh. Validate in the target browser; same-site domains avoid that dependency. Never disable certificate validation to make a database connection work.
 
