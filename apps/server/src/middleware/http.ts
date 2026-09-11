@@ -1,7 +1,7 @@
 import type { RequestHandler, ErrorRequestHandler } from 'express';
 import { ZodError } from 'zod';
 import type { User, Role } from '@velozity/shared';
-import { env } from '../config/env.js';
+import { allowedOrigins } from '../config/env.js';
 import { AppError } from '../lib/errors.js';
 import { logger } from '../lib/logger.js';
 import { authenticateToken } from '../modules/auth/auth.service.js';
@@ -28,7 +28,10 @@ export const roles =
     next();
   };
 export const checkOrigin: RequestHandler = (req, _res, next) => {
-  if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method) && req.headers.origin !== env.APP_ORIGIN)
+  if (
+    !['GET', 'HEAD', 'OPTIONS'].includes(req.method) &&
+    !allowedOrigins.includes(req.headers.origin ?? '')
+  )
     throw new AppError(403, 'INVALID_ORIGIN', 'Request origin is not allowed.');
   next();
 };

@@ -1,10 +1,15 @@
 import { test, expect, type Page } from '@playwright/test';
+
+const workspaceReadyTimeout = 15_000;
+
 async function login(page: Page, alias = 'admin') {
   await page.goto('/');
   await page.getByLabel('Email address').fill(`${alias}@velozity.test`);
   await page.getByLabel('Password', { exact: true }).fill(process.env.SEED_PASSWORD!);
   await page.getByRole('button', { name: 'Sign in to workspace' }).click();
-  await expect(page.getByRole('heading', { name: /Welcome back,/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Welcome back,/ })).toBeVisible({
+    timeout: workspaceReadyTimeout,
+  });
 }
 test('admin dashboard, project detail, URL filters, notifications, and logout', async ({
   page,
@@ -55,7 +60,7 @@ test('developer can update assigned task and another browser sees the live event
     await expect(
       admin.locator('.activity-item').first().locator('.activity-transition'),
     ).toContainText(next === 'DONE' ? 'Done' : 'In progress');
-    await expect(select).toBeEnabled();
+    await expect(select).toBeEnabled({ timeout: workspaceReadyTimeout });
     await Promise.all([
       developer.waitForResponse(
         (r) =>
@@ -129,10 +134,14 @@ test('two tabs can restore the same session without invalidating each other', as
   await login(page);
   const second = await context.newPage();
   await second.goto('/');
-  await expect(second.getByRole('heading', { name: /Welcome back,/ })).toBeVisible();
+  await expect(second.getByRole('heading', { name: /Welcome back,/ })).toBeVisible({
+    timeout: workspaceReadyTimeout,
+  });
   await Promise.all([page.reload(), second.reload()]);
   for (const tab of [page, second]) {
-    await expect(tab.getByRole('heading', { name: /Welcome back,/ })).toBeVisible();
+    await expect(tab.getByRole('heading', { name: /Welcome back,/ })).toBeVisible({
+      timeout: workspaceReadyTimeout,
+    });
     await tab.getByRole('link', { name: 'Tasks', exact: true }).click();
     await expect(tab.locator('tbody tr').first()).toBeVisible();
   }

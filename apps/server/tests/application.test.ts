@@ -38,7 +38,7 @@ function call(
   method: 'get' | 'post' | 'patch' | 'delete',
   path: string,
   role = 'admin',
-  body?: unknown,
+  body?: Record<string, unknown>,
 ) {
   const r = request(server)[method](`/api${path}`).set('Origin', origin);
   if (auth[role]) r.set('Authorization', `Bearer ${auth[role]!.token}`);

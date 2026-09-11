@@ -5,13 +5,16 @@ const schema = z
   .object({
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
     PORT: z.coerce.number().int().min(1).max(65535).default(4000),
-    DATABASE_URL: z.string().startsWith('postgres').transform((value) => {
-      const url = new URL(value);
-      const sslmode = url.searchParams.get('sslmode')?.toLowerCase();
-      if (sslmode && ['prefer', 'require', 'verify-ca'].includes(sslmode))
-        url.searchParams.set('sslmode', 'verify-full');
-      return url.toString();
-    }),
+    DATABASE_URL: z
+      .string()
+      .startsWith('postgres')
+      .transform((value) => {
+        const url = new URL(value);
+        const sslmode = url.searchParams.get('sslmode')?.toLowerCase();
+        if (sslmode && ['prefer', 'require', 'verify-ca'].includes(sslmode))
+          url.searchParams.set('sslmode', 'verify-full');
+        return url.toString();
+      }),
     APP_ORIGIN: z.url().transform((v) => new URL(v).origin),
     ACCESS_TOKEN_SECRET: z.string().min(32),
     REFRESH_TOKEN_SECRET: z.string().min(32),
@@ -39,3 +42,14 @@ if (!parsed.success)
     `Invalid server configuration: ${parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ')}`,
   );
 export const env = parsed.data;
+
+const loopbackAlias = (() => {
+  if (env.NODE_ENV !== 'development') return null;
+  const origin = new URL(env.APP_ORIGIN);
+  if (origin.hostname === 'localhost') origin.hostname = '127.0.0.1';
+  else if (origin.hostname === '127.0.0.1') origin.hostname = 'localhost';
+  else return null;
+  return origin.origin;
+})();
+
+export const allowedOrigins = [env.APP_ORIGIN, ...(loopbackAlias ? [loopbackAlias] : [])];

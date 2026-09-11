@@ -1,7 +1,7 @@
 import type { Server as HttpServer } from 'node:http';
 import { Server } from 'socket.io';
 import type { User } from '@velozity/shared';
-import { env } from '../config/env.js';
+import { allowedOrigins } from '../config/env.js';
 import { authenticateToken } from '../modules/auth/auth.service.js';
 import { logger } from '../lib/logger.js';
 import { scopedTask } from '../modules/work/work.repository.js';
@@ -17,8 +17,9 @@ export interface Realtime {
 export function createGateway(server: HttpServer): Realtime {
   const io = new Server(server, {
     transports: ['websocket'],
-    cors: { origin: env.APP_ORIGIN, credentials: true },
-    allowRequest: (req, callback) => callback(null, req.headers.origin === env.APP_ORIGIN),
+    cors: { origin: allowedOrigins, credentials: true },
+    allowRequest: (req, callback) =>
+      callback(null, allowedOrigins.includes(req.headers.origin ?? '')),
     maxHttpBufferSize: 16384,
   });
   io.use(async (socket, next) => {
