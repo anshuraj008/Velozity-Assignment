@@ -71,6 +71,7 @@ export const filterSchema = z
 export const activityQuerySchema = z
   .object({
     project_id: idSchema.optional(),
+    task_id: idSchema.optional(),
     after: z
       .string()
       .regex(/^\d{1,19}$/)

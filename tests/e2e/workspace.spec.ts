@@ -55,12 +55,18 @@ test('developer can update assigned task and another browser sees the live event
     await developer.getByRole('link', { name: 'My tasks', exact: true }).click();
     await expect(developer.getByRole('button', { name: 'Create task' })).toHaveCount(0);
     await developer.locator('.task-title-button').first().click();
-    const dialog = developer.getByRole('dialog', { name: 'Task details' });
+    const dialog = developer.getByRole('dialog');
     await expect(dialog).toBeVisible();
     const select = dialog.getByLabel('Status', { exact: true });
     const previous = await select.inputValue();
     const next = previous === 'DONE' ? 'IN_PROGRESS' : 'DONE';
-    await select.selectOption(next);
+    await Promise.all([
+      developer.waitForResponse(
+        (r) =>
+          r.url().includes('/status') && r.request().method() === 'PATCH' && r.status() === 200,
+      ),
+      select.selectOption(next),
+    ]);
     await expect(admin.locator('.activity-item').first()).toContainText('Arjun Mehta');
     await expect(
       admin.locator('.activity-item').first().locator('.activity-transition'),

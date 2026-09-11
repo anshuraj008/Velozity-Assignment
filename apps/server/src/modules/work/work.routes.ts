@@ -80,7 +80,7 @@ export function workRouter(realtime: Realtime) {
   });
   router.get(['/activities', '/activities/catchup'], async (req, res) => {
     const q = activityQuerySchema.parse(req.query);
-    res.json(await repo.activityFeed(req.user, q.project_id, q.after));
+    res.json(await repo.activityFeed(req.user, q.project_id, q.task_id, q.after));
   });
   router.get('/notifications', async (req, res) => res.json(await repo.notificationList(req.user)));
   router.patch('/notifications/read-all', async (req, res) => {

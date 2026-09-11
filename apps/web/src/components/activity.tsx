@@ -7,10 +7,12 @@ import { useLive } from '../lib/live';
 import { Avatar, Empty, ErrorNotice, Loading, relativeDate } from './ui';
 export function ActivityFeed({
   projectId,
+  taskId,
   compact = false,
   fullPage = false,
 }: {
   projectId?: string;
+  taskId?: string;
   compact?: boolean;
   fullPage?: boolean;
 }) {
@@ -19,8 +21,14 @@ export function ActivityFeed({
   const [userFilter, setUserFilter] = useState('');
   const [statusOnly, setStatusOnly] = useState(false);
   const query = useQuery({
-    queryKey: ['activity', projectId],
-    queryFn: () => api<ActivityPage>(`/activities${projectId ? `?project_id=${projectId}` : ''}`),
+    queryKey: ['activity', projectId, taskId],
+    queryFn: () =>
+      api<ActivityPage>(
+        `/activities?${new URLSearchParams({
+          ...(projectId ? { project_id: projectId } : {}),
+          ...(taskId ? { task_id: taskId } : {}),
+        })}`,
+      ),
   });
   if (query.isPending) return <Loading />;
   if (query.error) return <ErrorNotice error={query.error} retry={() => void query.refetch()} />;

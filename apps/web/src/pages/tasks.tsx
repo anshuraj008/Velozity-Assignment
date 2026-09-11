@@ -20,8 +20,9 @@ import {
 } from '@velozity/shared';
 import { api, json } from '../lib/api';
 import { useAuth } from '../lib/auth';
-import { Avatar, Badge, Empty, ErrorNotice, Loading, Modal, formatDate } from '../components/ui';
+import { Avatar, Badge, Drawer, Empty, ErrorNotice, Loading, formatDate } from '../components/ui';
 import { TaskForm } from '../components/forms';
+import { ActivityFeed } from '../components/activity';
 
 export function TaskDetails({ id, onClose }: { id: string; onClose: () => void }) {
   const query = useQuery({
@@ -39,7 +40,7 @@ export function TaskDetails({ id, onClose }: { id: string; onClose: () => void }
   });
   if (edit && query.data) return <TaskForm task={query.data} onClose={() => setEdit(false)} />;
   return (
-    <Modal title="Task details" onClose={onClose} wide>
+    <Drawer title={query.data?.title ?? 'Task details'} onClose={onClose}>
       {query.isPending ? (
         <Loading />
       ) : query.error ? (
@@ -48,7 +49,6 @@ export function TaskDetails({ id, onClose }: { id: string; onClose: () => void }
         <>
           <div className="task-detail-heading">
             <span className="eyebrow">{query.data.project_name}</span>
-            <h2>{query.data.title}</h2>
             <div className="task-detail-badges">
               <Badge value={query.data.priority} />
               {query.data.is_overdue && <span className="overdue-text">Overdue</span>}
@@ -89,6 +89,10 @@ export function TaskDetails({ id, onClose }: { id: string; onClose: () => void }
             </select>
           </label>
           {update.error && <ErrorNotice error={update.error} />}
+          <section className="task-detail-activity">
+            <span className="eyebrow">ACTIVITY</span>
+            <ActivityFeed taskId={id} compact />
+          </section>
           <div className="form-actions">
             {user?.role !== 'DEVELOPER' && (
               <button className="button" onClick={() => setEdit(true)}>
@@ -102,7 +106,7 @@ export function TaskDetails({ id, onClose }: { id: string; onClose: () => void }
           </div>
         </>
       )}
-    </Modal>
+    </Drawer>
   );
 }
 export function TaskList({

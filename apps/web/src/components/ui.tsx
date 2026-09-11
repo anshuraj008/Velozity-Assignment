@@ -94,6 +94,41 @@ export function Modal({
     </dialog>
   );
 }
+export function Drawer({
+  title,
+  onClose,
+  children,
+}: {
+  title: string;
+  onClose: () => void;
+  children: ReactNode;
+}) {
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [onClose]);
+  return (
+    <div className="drawer-backdrop" role="presentation" onMouseDown={onClose}>
+      <aside
+        className="drawer"
+        aria-label={title}
+        role="dialog"
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        <div className="modal-heading">
+          <h2>{title}</h2>
+          <button className="icon-button" onClick={onClose} aria-label="Close drawer">
+            <X size={20} />
+          </button>
+        </div>
+        {children}
+      </aside>
+    </div>
+  );
+}
 export const formatDate = (value: string) =>
   new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
     new Date(value),

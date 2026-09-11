@@ -242,12 +242,21 @@ export async function notify(db: Db, userId: string, taskId: string, message: st
 export async function clearOldAssignmentNotifications(db: Db, taskId: string, previousId: string) {
   await db.query('DELETE FROM notifications WHERE task_id=$1 AND user_id=$2', [taskId, previousId]);
 }
-export async function activityFeed(user: User, projectId?: string, after?: string) {
+export async function activityFeed(
+  user: User,
+  projectId?: string,
+  taskId?: string,
+  after?: string,
+) {
   const params: unknown[] = [];
   const parts = [taskScope(user, params)];
   if (projectId) {
     params.push(projectId);
     parts.push(`a.project_id=$${params.length}`);
+  }
+  if (taskId) {
+    params.push(taskId);
+    parts.push(`a.task_id=$${params.length}`);
   }
   if (after) {
     params.push(after);
