@@ -317,7 +317,7 @@ A deterministic seed script (`npm run db:seed`) provides realistic data:
 
 - **1 Admin**: `admin@velozity.test`
 - **2 Project Managers**: `maya@velozity.test`, `james@velozity.test`
-- **4 Developers**: `arjun@velozity.test`, `sofia@velozity.test`, `noah@velozity.test`, `priya@velozity.test`
+- **4 Developers**: `arjun@velozity.test`, `sofia@velozity.test`, `ankita@velozity.test`, `priya@velozity.test`
 - **3+ Clients**: Realistic company names, emails, and contact details
 - **3+ Projects**: Distributed across the Project Managers
 - **18+ Tasks**: Mixed across `TODO`, `IN_PROGRESS`, `IN_REVIEW`, `DONE` and priorities (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)

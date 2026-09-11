@@ -11,7 +11,7 @@ export async function seedData(db: Db, password: string) {
     ['James Wilson', 'james', 'PROJECT_MANAGER'],
     ['Arjun Mehta', 'arjun', 'DEVELOPER'],
     ['Sofia Reyes', 'sofia', 'DEVELOPER'],
-    ['Noah Williams', 'noah', 'DEVELOPER'],
+    ['Ankita Sharma', 'ankita', 'DEVELOPER'],
     ['Priya Shah', 'priya', 'DEVELOPER'],
   ];
   const users: string[] = [];

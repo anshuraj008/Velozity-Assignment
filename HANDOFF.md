@@ -75,11 +75,13 @@ Last updated: 2026-09-11
 - Notification access and read mutations remain authenticated to the current user; existing Socket.IO `notifications` sync invalidation provides realtime refresh without polling.
 - Kept the realtime sidebar state truthful in `apps/web/src/components/shell.tsx` and `apps/web/src/styles.css`: connected sockets show a filled green dot and `Workspace is live`; disconnected sockets show a hollow amber dot and `Reconnecting...`.
 - Confirmed reconnect catch-up remains database-backed: `LiveProvider` requests `/activities/catchup?after=<cursor>` after each successful socket connection, while the server returns the latest 20 permitted activity records from PostgreSQL.
+- Polished demo identity seed data: replaced `Noah Williams / noah@velozity.test` with `Ankita Sharma / ankita@velozity.test`, updated `README.md` and `PROJECT_BLUEPRINT.md`, and added/applied `apps/server/migrations/003_normalize_demo_developer_identity.sql` for existing local data. No Gmail or other personal email domains are used.
 - Task drawer change verified with Prettier, full `npm run typecheck`, and the developer realtime Playwright workflow: 1 test passed. `npm test` reached Vitest but the Windows process crashed with a native out-of-memory error before tests executed; rerun when system memory is available.
 - Client search verified with Prettier and full `npm run typecheck`. The updated client/project browser workflow reached client cleanup but timed out while the existing delete request remained in `Saving...`; the screenshot confirmed search and the new project-tab navigation had already passed.
 - Team member modal copy verified with Prettier, full `npm run typecheck`, and source diagnostics. Backend authorization and soft-deactivation behavior were verified by inspection of the existing Admin-only routes and service logic.
 - Notifications verified with Prettier, full `npm run typecheck`, and the admin browser workflow covering the notification modal: 1 test passed.
 - Live-state copy verified with Prettier, full `npm run typecheck`, and the admin realtime browser workflow: 1 test passed.
+- Demo identity cleanup verified with the applied migration, Prettier, full `npm run typecheck`, `git diff --check`, and source audit for stale names/personal email domains.
 - Docker is not installed; container execution and external deployment have not been verified. No pushes or external deployments have been made.
 
 ## Future checkpoint contents

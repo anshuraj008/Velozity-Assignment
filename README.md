@@ -32,15 +32,15 @@ The seed command deliberately refuses a nonempty database so it cannot erase exi
 
 Every seeded account uses the **`SEED_PASSWORD` value in your local `apps/server/.env`**. Passwords are generated at setup; there is no universal password in the repository. For a hosted assessment demo, share the demo-only password separately with the reviewer and isolate the database from real client data.
 
-| Role            | Email                 |
-| --------------- | --------------------- |
-| Admin           | `admin@velozity.test` |
-| Project manager | `maya@velozity.test`  |
-| Project manager | `james@velozity.test` |
-| Developer       | `arjun@velozity.test` |
-| Developer       | `sofia@velozity.test` |
-| Developer       | `noah@velozity.test`  |
-| Developer       | `priya@velozity.test` |
+| Role            | Email                  |
+| --------------- | ---------------------- |
+| Admin           | `admin@velozity.test`  |
+| Project manager | `maya@velozity.test`   |
+| Project manager | `james@velozity.test`  |
+| Developer       | `arjun@velozity.test`  |
+| Developer       | `sofia@velozity.test`  |
+| Developer       | `ankita@velozity.test` |
+| Developer       | `priya@velozity.test`  |
 
 Seed data includes 3 clients, 3 projects split between the two managers, 18 tasks with varied states/priorities, 6 overdue tasks, activity, and notifications.
 
