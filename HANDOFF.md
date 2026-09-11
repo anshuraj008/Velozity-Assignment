@@ -71,6 +71,8 @@ Last updated: 2026-09-11
 - Added client search across name, email, and company in `apps/web/src/pages/directory.tsx`, including a clear no-match state. Client detail navigation was intentionally not added because it is lower priority than realtime/RBAC and there is no existing detail endpoint or route.
 - Refined the Team Members modal copy in `apps/web/src/components/forms.tsx` to use `Add team member`, `Temporary password`, and `Add member`. Deactivation confirmation in `apps/web/src/pages/directory.tsx` now names the member and explicitly states that sign-in is disabled while task/activity history remains.
 - Confirmed the existing user endpoints remain Admin-only and deactivation is a soft `is_active=false` update; historical user records are not deleted.
+- Applied the FlowDesk Cyprus + Sand visual redesign as a frontend-only change in `apps/web/src/styles.css` and `apps/web/src/components/logo.tsx`: centralized brand/semantic tokens, warm light workspace surfaces, Cyprus navigation/buttons/logo, restrained shadows and radii, semantic task colors, polished activity/notification states, and a premium dark teal login split. Routes, React logic, API calls, auth, Socket.IO, and backend code were not changed.
+- Fixed the FlowDesk wordmark rendering in `apps/web/src/components/logo.tsx` and `apps/web/src/styles.css`: `Desk` no longer uses fragile gradient text clipping, and the icon now has a cleaner connected-flow detail while preserving the existing F mark and dimensions.
 - Completed the notification feature: enriched notification responses with task/project and latest activity context, added optimistic individual/mark-all read updates in the bell modal, added `View all notifications`, and added the full `/notifications` page in `apps/web/src/pages/notifications.tsx`.
 - Notification access and read mutations remain authenticated to the current user; existing Socket.IO `notifications` sync invalidation provides realtime refresh without polling.
 - Kept the realtime sidebar state truthful in `apps/web/src/components/shell.tsx` and `apps/web/src/styles.css`: connected sockets show a filled green dot and `Workspace is live`; disconnected sockets show a hollow amber dot and `Reconnecting...`.
@@ -82,6 +84,8 @@ Last updated: 2026-09-11
 - Notifications verified with Prettier, full `npm run typecheck`, and the admin browser workflow covering the notification modal: 1 test passed.
 - Live-state copy verified with Prettier, full `npm run typecheck`, and the admin realtime browser workflow: 1 test passed.
 - Demo identity cleanup verified with the applied migration, Prettier, full `npm run typecheck`, `git diff --check`, and source audit for stale names/personal email domains.
+- FlowDesk redesign verified with Prettier, full `npm run typecheck`, `npm run build`, no remaining legacy indigo/purple literals in the frontend stylesheet, and focused desktop/mobile Playwright checks: 2 tests passed. The full suite had 4/5 pass; the existing developer realtime workflow timed out in its cleanup/timing path while its screenshots showed the themed Activity page and task drawer rendered correctly.
+- Logo correction verified with Prettier, full typecheck, web production build, and the main desktop browser workflow: 1 test passed.
 - Docker is not installed; container execution and external deployment have not been verified. No pushes or external deployments have been made.
 
 ## Future checkpoint contents
