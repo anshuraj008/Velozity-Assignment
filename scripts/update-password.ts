@@ -6,17 +6,17 @@ async function run() {
   const newPassword = process.env.SEED_PASSWORD || 'FlowDesk@2026';
   console.log(`Hashing new password: ${newPassword}...`);
   const hash = await hashPassword(newPassword);
-  
+
   const result = await pool.query(
     'UPDATE users SET password_hash = $1 RETURNING id, name, email, role',
     [hash],
   );
-  
+
   console.log(`Successfully updated ${result.rowCount} user(s) to new password!`);
   result.rows.forEach((u) => {
     console.log(`  - [${u.role}] ${u.name} (${u.email})`);
   });
-  
+
   await pool.end();
 }
 
