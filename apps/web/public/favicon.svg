@@ -1,13 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
   <defs>
-    <linearGradient id="fd-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#4F46E5" />
-      <stop offset="50%" stop-color="#6366F1" />
-      <stop offset="100%" stop-color="#06B6D4" />
+    <linearGradient id="flowdesk-favicon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#087D72" />
+      <stop offset="55%" stop-color="#0F9787" />
+      <stop offset="100%" stop-color="#21BFA6" />
     </linearGradient>
   </defs>
-  <rect width="40" height="40" rx="11" fill="url(#fd-grad)" />
-  <!-- Modern Geometric Flow Mark -->
-  <path d="M11 11h18c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5H15v4.5h11c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5H15V28c0 .83-.67 1.5-1.5 1.5S12 28.83 12 28V12.5c0-.83.67-1.5 1.5-1.5z" fill="#ffffff" />
-  <circle cx="25" cy="26" r="3" fill="#38BDF8" />
+  <rect width="40" height="40" rx="10" fill="url(#flowdesk-favicon-grad)" />
+  <path
+    d="M12.5 11C12.5 10.17 13.17 9.5 14 9.5H27.5C28.33 9.5 29 10.17 29 11C29 11.83 28.33 12.5 27.5 12.5H16V16.5H24.5C25.33 16.5 26 17.17 26 18C26 18.83 25.33 19.5 24.5 19.5H16V28.5C16 29.33 15.33 30 14.5 30C13.67 30 13 29.33 13 28.5V11C13 11 12.5 11 12.5 11Z"
+    fill="#FFFFFF"
+  />
+  <circle cx="24.5" cy="26" r="2.2" fill="#F0EDE4" />
 </svg>
+

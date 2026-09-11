@@ -25,7 +25,7 @@ export function Login() {
     <div className="login-page">
       <section className="login-story">
         <div className="brand">
-          <FlowDeskLogo size={36} />
+          <FlowDeskLogo size={36} variant="dark" />
         </div>
         <div className="login-story-content">
           <span className="eyebrow">ONE TEAM. A SHARED PICTURE.</span>

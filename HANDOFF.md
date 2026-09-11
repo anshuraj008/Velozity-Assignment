@@ -85,7 +85,13 @@ Last updated: 2026-09-11
 - Live-state copy verified with Prettier, full `npm run typecheck`, and the admin realtime browser workflow: 1 test passed.
 - Demo identity cleanup verified with the applied migration, Prettier, full `npm run typecheck`, `git diff --check`, and source audit for stale names/personal email domains.
 - FlowDesk redesign verified with Prettier, full `npm run typecheck`, `npm run build`, no remaining legacy indigo/purple literals in the frontend stylesheet, and focused desktop/mobile Playwright checks: 2 tests passed. The full suite had 4/5 pass; the existing developer realtime workflow timed out in its cleanup/timing path while its screenshots showed the themed Activity page and task drawer rendered correctly.
-- Logo correction verified with Prettier, full typecheck, web production build, and the main desktop browser workflow: 1 test passed.
+- Logo brand refinement per the FlowDesk Logo & Brand Refinement Guide:
+  - Updated `apps/web/src/components/logo.tsx` with the precise brand gradient (`#087D72` to `#21BFA6`), geometric white "F" mark, subtle accent node, and unified wordmark supporting explicit light and dark variants (`variant="light" | "dark" | "auto"`).
+  - Fixed dark-background legibility on Cyprus `#004741` surfaces (e.g. login story hero in `apps/web/src/pages/login.tsx`): `Flow` is `#FFFFFF`, `Desk` is Sand `#F0EDE4` (resolving the previous low-contrast issue), and period `.` is Mint `#21BFA6`.
+  - Configured light-background styling for sidebar/navbar: `Flow` is `#17211F`, `Desk` is `#004741`, and period `.` is `#21BFA6`.
+  - Applied subtle depth shadow `0 4px 14px rgba(0, 71, 65, 0.18)` and 13px spacing between icon and wordmark.
+  - Updated `apps/web/public/favicon.svg` with the matching gradient and geometric mark.
+- Verified: `npm run typecheck` passed (exit code 0), `npm run build` passed (exit code 0), and `npm run format:check` passed after Prettier formatting.
 - Docker is not installed; container execution and external deployment have not been verified. No pushes or external deployments have been made.
 
 ## Future checkpoint contents

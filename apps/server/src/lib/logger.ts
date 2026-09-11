@@ -16,7 +16,9 @@ const devStream = new Writable({
         const duration = data.responseTime !== undefined ? `${data.responseTime}ms` : '';
         const statusColor = status >= 500 ? '\x1b[31m' : status >= 400 ? '\x1b[33m' : '\x1b[32m';
         const reset = '\x1b[0m';
-        process.stdout.write(`[API] ${time} -> ${statusColor}${status}${reset} ${method} ${url} (${duration})\n`);
+        process.stdout.write(
+          `[API] ${time} -> ${statusColor}${status}${reset} ${method} ${url} (${duration})\n`,
+        );
       } else if (msg) {
         process.stdout.write(`[API] ${time} -> ${msg}\n`);
       } else {

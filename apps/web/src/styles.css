@@ -224,44 +224,67 @@ form {
 .flowdesk-brand-wrapper {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 13px;
 }
 
 .flowdesk-brand-icon {
   flex-shrink: 0;
-  filter: drop-shadow(0 3px 10px rgba(79, 70, 229, 0.35));
+  filter: drop-shadow(0 4px 14px rgba(0, 71, 65, 0.18));
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 10px;
 }
 
 .brand:hover .flowdesk-brand-icon {
-  transform: scale(1.08) rotate(-3deg);
+  transform: scale(1.05);
 }
 
 .flowdesk-brand-text {
-  font-family: var(--font-heading);
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.6px;
+  font-family:
+    var(--font-heading),
+    'Inter',
+    'Manrope',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
   line-height: 1;
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
+  user-select: none;
 }
 
 .flowdesk-brand-flow {
-  color: #0f172a;
-  font-weight: 800;
+  color: #17211f;
+  font-weight: 700;
 }
 
 .flowdesk-brand-desk {
-  color: var(--brand-primary);
+  color: #004741;
   background: none;
-  -webkit-text-fill-color: currentColor;
-  font-weight: 800;
+  -webkit-text-fill-color: #004741;
+  font-weight: 700;
 }
 
 .flowdesk-brand-dot {
-  color: #06b6d4;
-  font-weight: 800;
+  color: #21bfa6;
+  font-weight: 700;
+}
+
+/* Dark background variant (on Cyprus #004741 surface) */
+.flowdesk-brand-wrapper--dark .flowdesk-brand-flow {
+  color: #ffffff;
+}
+
+.flowdesk-brand-wrapper--dark .flowdesk-brand-desk {
+  color: #f0ede4;
+  background: none;
+  -webkit-text-fill-color: #f0ede4;
+}
+
+.flowdesk-brand-wrapper--dark .flowdesk-brand-dot {
+  color: #21bfa6;
 }
 
 .workspace-switch {
@@ -2433,6 +2456,16 @@ tbody tr:hover td {
   color: #ffffff;
 }
 
+.login-story .flowdesk-brand-desk {
+  color: #f0ede4;
+  background: none;
+  -webkit-text-fill-color: #f0ede4;
+}
+
+.login-story .flowdesk-brand-dot {
+  color: #21bfa6;
+}
+
 .login-story-content {
   margin: auto 0;
   padding: 60px 0;
@@ -2783,21 +2816,21 @@ body {
 }
 
 .flowdesk-brand-icon {
-  filter: drop-shadow(0 3px 8px rgba(0, 71, 65, 0.2));
+  filter: drop-shadow(0 4px 14px rgba(0, 71, 65, 0.18));
 }
 
 .flowdesk-brand-flow {
-  color: var(--text-primary);
+  color: #17211f;
 }
 
 .flowdesk-brand-desk {
-  color: var(--brand-primary);
+  color: #004741;
   background: none;
-  -webkit-text-fill-color: currentColor;
+  -webkit-text-fill-color: #004741;
 }
 
 .flowdesk-brand-dot {
-  color: var(--brand-accent);
+  color: #21bfa6;
 }
 
 .workspace-switch {
