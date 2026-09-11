@@ -350,13 +350,14 @@ export function UserForm({ user, onClose }: { user?: User; onClose: () => void }
               <input
                 name="password"
                 type="password"
-                minLength={12}
+                minLength={8}
                 maxLength={128}
                 required
                 autoComplete="new-password"
+                placeholder="e.g. FlowDesk@2026"
               />
               <span className="field-hint">
-                At least 12 characters. Share this securely with the team member.
+                At least 8 characters with uppercase, lowercase, number, and symbol.
               </span>
             </label>
           </>

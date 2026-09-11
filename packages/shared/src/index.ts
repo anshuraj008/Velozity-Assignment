@@ -23,7 +23,14 @@ export const idSchema = z.uuid();
 const name = z.string().trim().min(2).max(120);
 const description = z.string().trim().max(4000).default('');
 const email = z.email().trim().toLowerCase().max(254);
-export const passwordSchema = z.string().min(12).max(128);
+export const passwordSchema = z
+  .string()
+  .min(8, 'Password must be at least 8 characters long')
+  .max(128)
+  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+  .regex(/[0-9]/, 'Password must contain at least one number')
+  .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special symbol');
 export const loginSchema = z.object({ email, password: z.string().min(1).max(128) }).strict();
 export const userSchema = z
   .object({ name, email, role: z.enum(roles), password: passwordSchema })
