@@ -88,18 +88,23 @@ export function Dashboard() {
       tone: 'blue',
     },
     {
-      label: 'Completed',
-      value: data.completed,
-      icon: CheckCircle2,
-      foot: `${data.total ? Math.round((data.completed / data.total) * 100) : 0}% of all tasks`,
-      tone: 'green',
-    },
-    {
       label: 'Overdue',
       value: data.overdue,
       icon: Clock3,
       foot: data.overdue ? 'A little attention needed' : 'Everything is on schedule',
       tone: 'amber',
+    },
+    {
+      label: user?.role === 'ADMIN' ? 'Online now' : 'Completed',
+      value: user?.role === 'ADMIN' ? live.online : data.completed,
+      icon: user?.role === 'ADMIN' ? Users : CheckCircle2,
+      foot:
+        user?.role === 'ADMIN'
+          ? live.connected
+            ? 'Active team connections'
+            : 'Presence reconnecting'
+          : `${data.total ? Math.round((data.completed / data.total) * 100) : 0}% of all tasks`,
+      tone: user?.role === 'ADMIN' ? 'cyan' : 'green',
     },
   ];
   return (
@@ -205,10 +210,16 @@ export function Dashboard() {
             <div className="section-heading">
               <div>
                 <h2>
-                  {user?.role === 'PROJECT_MANAGER' ? 'Priority breakdown' : 'Work at a glance'}
+                  {user?.role === 'ADMIN'
+                    ? 'Task Status'
+                    : user?.role === 'PROJECT_MANAGER'
+                      ? 'Priority breakdown'
+                      : 'Work at a glance'}
                 </h2>
                 <p>
-                  {user?.role === 'PROJECT_MANAGER'
+                  {user?.role === 'ADMIN'
+                    ? 'A clear view of every task in the workspace.'
+                    : user?.role === 'PROJECT_MANAGER'
                     ? 'Know where your team’s attention is needed.'
                     : 'Small steps, steady momentum.'}
                 </p>

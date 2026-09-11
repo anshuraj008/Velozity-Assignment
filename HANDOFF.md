@@ -27,6 +27,11 @@ Last updated: 2026-09-11
 1. Review the final diff and decide whether to commit or push the currently untracked project files.
 2. Run Docker/Compose and deployment checks only in an environment that provides Docker and the target hosting credentials.
 
+## Current checkpoint
+
+- Updating the Admin dashboard to show role-specific metrics: Projects, Total tasks, Overdue, and live Online now presence, plus an explicit Task Status section.
+- Reusing the existing WebSocket presence count and dashboard `by_status` response; no server or shared-contract changes are expected.
+
 ## Verification
 
 - Inspected the workspace, including hidden entries; no pre-existing project files were present.
