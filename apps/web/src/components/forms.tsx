@@ -333,7 +333,7 @@ export function UserForm({ user, onClose }: { user?: User; onClose: () => void }
     save.mutate(parsed.data);
   }
   return (
-    <Modal title={user ? 'Edit team member' : 'Add a team member'} onClose={onClose}>
+    <Modal title={user ? 'Edit team member' : 'Add team member'} onClose={onClose}>
       <form onSubmit={submit}>
         <label>
           Full name
@@ -346,7 +346,7 @@ export function UserForm({ user, onClose }: { user?: User; onClose: () => void }
               <input name="email" type="email" required autoComplete="off" />
             </label>
             <label>
-              Initial password
+              Temporary password
               <input
                 name="password"
                 type="password"
@@ -356,7 +356,7 @@ export function UserForm({ user, onClose }: { user?: User; onClose: () => void }
                 autoComplete="new-password"
               />
               <span className="field-hint">
-                At least 12 characters. Share securely with the team member.
+                At least 12 characters. Share this securely with the team member.
               </span>
             </label>
           </>
@@ -377,7 +377,7 @@ export function UserForm({ user, onClose }: { user?: User; onClose: () => void }
             Cancel
           </button>
           <button className="button primary" disabled={save.isPending}>
-            {save.isPending ? 'Saving…' : 'Save member'}
+            {save.isPending ? 'Saving…' : user ? 'Save member' : 'Add member'}
           </button>
         </div>
       </form>

@@ -275,7 +275,19 @@ export async function activityFeed(
 export async function notificationList(user: User) {
   const items = (
     await pool.query<Notification>(
-      'SELECT id,task_id,message,is_read,created_at FROM notifications WHERE user_id=$1 ORDER BY created_at DESC,id DESC LIMIT 50',
+      `SELECT n.id,n.task_id,n.message,n.is_read,n.created_at,
+        t.title task_title,p.name project_name,
+        recent.actor_name,recent.old_value,recent.new_value
+       FROM notifications n
+       LEFT JOIN tasks t ON t.id=n.task_id
+       LEFT JOIN projects p ON p.id=t.project_id
+       LEFT JOIN LATERAL (
+         SELECT u.name actor_name,a.old_value,a.new_value
+         FROM activities a JOIN users u ON u.id=a.actor_id
+         WHERE a.task_id=n.task_id AND a.created_at<=n.created_at
+         ORDER BY a.created_at DESC,a.id DESC LIMIT 1
+       ) recent ON true
+       WHERE n.user_id=$1 ORDER BY n.created_at DESC,n.id DESC LIMIT 50`,
       [user.id],
     )
   ).rows;

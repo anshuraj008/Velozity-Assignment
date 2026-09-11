@@ -69,8 +69,14 @@ Last updated: 2026-09-11
 - Added a reusable right-side task detail drawer in `apps/web/src/components/ui.tsx` and `apps/web/src/pages/tasks.tsx`. It shows task priority, status, assignee, due date, overdue state, description, and task activity; developers retain status-only editing because the existing Edit task control remains hidden for them.
 - Added optional task filtering to the existing authenticated activity endpoint across `packages/shared`, the work route, and repository. No separate activity workflow or permission model was introduced.
 - Added client search across name, email, and company in `apps/web/src/pages/directory.tsx`, including a clear no-match state. Client detail navigation was intentionally not added because it is lower priority than realtime/RBAC and there is no existing detail endpoint or route.
+- Refined the Team Members modal copy in `apps/web/src/components/forms.tsx` to use `Add team member`, `Temporary password`, and `Add member`. Deactivation confirmation in `apps/web/src/pages/directory.tsx` now names the member and explicitly states that sign-in is disabled while task/activity history remains.
+- Confirmed the existing user endpoints remain Admin-only and deactivation is a soft `is_active=false` update; historical user records are not deleted.
+- Completed the notification feature: enriched notification responses with task/project and latest activity context, added optimistic individual/mark-all read updates in the bell modal, added `View all notifications`, and added the full `/notifications` page in `apps/web/src/pages/notifications.tsx`.
+- Notification access and read mutations remain authenticated to the current user; existing Socket.IO `notifications` sync invalidation provides realtime refresh without polling.
 - Task drawer change verified with Prettier, full `npm run typecheck`, and the developer realtime Playwright workflow: 1 test passed. `npm test` reached Vitest but the Windows process crashed with a native out-of-memory error before tests executed; rerun when system memory is available.
 - Client search verified with Prettier and full `npm run typecheck`. The updated client/project browser workflow reached client cleanup but timed out while the existing delete request remained in `Saving...`; the screenshot confirmed search and the new project-tab navigation had already passed.
+- Team member modal copy verified with Prettier, full `npm run typecheck`, and source diagnostics. Backend authorization and soft-deactivation behavior were verified by inspection of the existing Admin-only routes and service logic.
+- Notifications verified with Prettier, full `npm run typecheck`, and the admin browser workflow covering the notification modal: 1 test passed.
 - Docker is not installed; container execution and external deployment have not been verified. No pushes or external deployments have been made.
 
 ## Future checkpoint contents

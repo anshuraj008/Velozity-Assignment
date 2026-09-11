@@ -38,7 +38,27 @@ export function Shell() {
   const read = useMutation({
     mutationFn: (id?: string) =>
       api(id ? `/notifications/${id}/read` : '/notifications/read-all', json('PATCH')),
-    onSuccess: () => cache.invalidateQueries({ queryKey: ['notifications'] }),
+    onMutate: async (id) => {
+      await cache.cancelQueries({ queryKey: ['notifications'] });
+      const previous = cache.getQueryData<{ items: Notification[]; unread: number }>([
+        'notifications',
+      ]);
+      cache.setQueryData<{ items: Notification[]; unread: number }>(
+        ['notifications'],
+        (current) => {
+          if (!current) return current;
+          const items = current.items.map((item) =>
+            !id || item.id === id ? { ...item, is_read: true } : item,
+          );
+          return { items, unread: items.filter((item) => !item.is_read).length };
+        },
+      );
+      return { previous };
+    },
+    onError: (_error, _id, context) => {
+      if (context?.previous) cache.setQueryData(['notifications'], context.previous);
+    },
+    onSettled: () => cache.invalidateQueries({ queryKey: ['notifications'] }),
   });
   if (!user) return null;
   const links = [
@@ -189,6 +209,12 @@ export function Shell() {
                   </div>
                   <div>
                     <p>{n.message}</p>
+                    {n.task_title && <strong>{n.task_title}</strong>}
+                    {n.new_value && n.actor_name && (
+                      <span className="notification-context">
+                        {n.actor_name} moved it to {labels[n.new_value as keyof typeof labels]}
+                      </span>
+                    )}
                     <time>{relativeDate(n.created_at)}</time>
                     {n.task_id && (
                       <Link to={`/tasks?task=${n.task_id}`} onClick={() => setNotifications(false)}>
@@ -210,6 +236,14 @@ export function Shell() {
             </div>
           )}
           {read.error && <ErrorNotice error={read.error} />}
+          <Link
+            className="notification-view-all"
+            to="/notifications"
+            onClick={() => setNotifications(false)}
+          >
+            View all notifications
+            <ArrowUpRight size={15} />
+          </Link>
         </Modal>
       )}
     </div>

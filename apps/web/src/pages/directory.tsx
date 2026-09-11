@@ -177,7 +177,7 @@ export function Directory({ kind }: { kind: 'clients' | 'users' }) {
             kind === 'clients'
               ? 'Delete client?'
               : (confirm as User).is_active
-                ? 'Deactivate member?'
+                ? `Deactivate ${(confirm as User).name}?`
                 : 'Reactivate member?'
           }
           onClose={() => setConfirm(null)}
@@ -186,7 +186,7 @@ export function Directory({ kind }: { kind: 'clients' | 'users' }) {
             {kind === 'clients'
               ? `Remove ${confirm.name}? Clients with projects must have their projects reassigned or deleted first.`
               : (confirm as User).is_active
-                ? `${confirm.name} will lose access to the workspace. Existing tasks and history are preserved.`
+                ? `${confirm.name} will no longer be able to sign in. Existing task and activity history will remain.`
                 : `Restore workspace access for ${confirm.name}.`}
           </p>
           {change.error && <ErrorNotice error={change.error} />}
@@ -199,7 +199,11 @@ export function Directory({ kind }: { kind: 'clients' | 'users' }) {
               disabled={change.isPending}
               onClick={() => change.mutate(confirm)}
             >
-              {change.isPending ? 'Saving…' : 'Confirm'}
+              {change.isPending
+                ? 'Saving…'
+                : kind === 'users' && (confirm as User).is_active
+                  ? 'Deactivate'
+                  : 'Confirm'}
             </button>
           </div>
         </Modal>

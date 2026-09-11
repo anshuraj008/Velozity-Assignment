@@ -2282,6 +2282,23 @@ tbody tr:hover td {
   color: #1e293b;
 }
 
+.notification-item strong,
+.notification-context {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.notification-item strong {
+  color: #334155;
+  margin-top: 4px;
+}
+
+.notification-context {
+  color: var(--muted);
+  margin-top: 2px;
+}
+
 .notification-item time {
   display: block;
   font-size: 11px;
@@ -2295,6 +2312,24 @@ tbody tr:hover td {
   font-size: 11px;
   font-weight: 600;
   margin-top: 6px;
+}
+
+.notification-view-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+  padding-top: 16px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.notifications-page-panel {
+  max-width: 900px;
+  padding: 20px 24px;
 }
 
 .mobile-menu {

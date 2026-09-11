@@ -13,6 +13,7 @@ import { Dashboard } from './pages/dashboard';
 import { Projects, ProjectDetails } from './pages/projects';
 import { TaskList } from './pages/tasks';
 import { Directory } from './pages/directory';
+import { NotificationsPage } from './pages/notifications';
 import './styles.css';
 
 const cache = new QueryClient({
@@ -56,6 +57,7 @@ function App() {
           <Route path="projects" element={<Projects />} />
           <Route path="projects/:id" element={<ProjectDetails />} />
           <Route path="tasks" element={<TaskList />} />
+          <Route path="notifications" element={<NotificationsPage />} />
           <Route
             path="activity"
             element={

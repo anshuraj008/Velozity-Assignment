@@ -134,6 +134,11 @@ export interface Notification {
   id: string;
   task_id: string | null;
   message: string;
+  task_title?: string;
+  project_name?: string;
+  actor_name?: string;
+  old_value?: string | null;
+  new_value?: string | null;
   is_read: boolean;
   created_at: string;
 }
