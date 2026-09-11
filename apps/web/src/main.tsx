@@ -59,18 +59,9 @@ function App() {
           <Route
             path="activity"
             element={
-              <>
-                <div className="page-heading">
-                  <div>
-                    <span className="eyebrow">EVERY STEP, IN ONE PLACE</span>
-                    <h1>Activity</h1>
-                    <p>The latest 20 updates across the work you’re part of.</p>
-                  </div>
-                </div>
-                <section className="panel full-activity">
-                  <ActivityFeed />
-                </section>
-              </>
+              <section className="panel full-activity">
+                <ActivityFeed fullPage />
+              </section>
             }
           />
           <Route
