@@ -72,38 +72,55 @@ export function Dashboard() {
   if (query.isPending) return <Loading />;
   if (query.error) return <ErrorNotice error={query.error} retry={() => void query.refetch()} />;
   const data = query.data;
+  const isProjectManager = user?.role === 'PROJECT_MANAGER';
+  const openTasks = data.total - data.completed;
+  const highCritical = data.by_priority
+    .filter((item) => item.priority === 'HIGH' || item.priority === 'CRITICAL')
+    .reduce((sum, item) => sum + item.count, 0);
   const stats = [
     {
-      label: 'Projects',
+      label: isProjectManager ? 'My projects' : 'Projects',
       value: data.projects,
       icon: FolderKanban,
       foot: 'Within your workspace',
       tone: 'violet',
     },
     {
-      label: 'Total tasks',
-      value: data.total,
+      label: isProjectManager ? 'Open tasks' : 'Total tasks',
+      value: isProjectManager ? openTasks : data.total,
       icon: ListTodo,
-      foot: 'Across your projects',
+      foot: isProjectManager ? 'Still in progress' : 'Across your projects',
       tone: 'blue',
     },
     {
-      label: 'Overdue',
-      value: data.overdue,
-      icon: Clock3,
-      foot: data.overdue ? 'A little attention needed' : 'Everything is on schedule',
-      tone: 'amber',
+      label: isProjectManager ? 'High/Critical' : 'Overdue',
+      value: isProjectManager ? highCritical : data.overdue,
+      icon: isProjectManager ? ArrowUpRight : Clock3,
+      foot: isProjectManager
+        ? 'Tasks needing close attention'
+        : data.overdue
+          ? 'A little attention needed'
+          : 'Everything is on schedule',
+      tone: isProjectManager ? 'amber' : 'amber',
     },
     {
-      label: user?.role === 'ADMIN' ? 'Online now' : 'Completed',
-      value: user?.role === 'ADMIN' ? live.online : data.completed,
-      icon: user?.role === 'ADMIN' ? Users : CheckCircle2,
+      label:
+        user?.role === 'ADMIN' ? 'Online now' : isProjectManager ? 'Due this week' : 'Completed',
+      value:
+        user?.role === 'ADMIN'
+          ? live.online
+          : isProjectManager
+            ? data.upcoming.length
+            : data.completed,
+      icon: user?.role === 'ADMIN' ? Users : isProjectManager ? CalendarDays : CheckCircle2,
       foot:
         user?.role === 'ADMIN'
           ? live.connected
             ? 'Active team connections'
             : 'Presence reconnecting'
-          : `${data.total ? Math.round((data.completed / data.total) * 100) : 0}% of all tasks`,
+          : isProjectManager
+            ? 'Open milestones this week'
+            : `${data.total ? Math.round((data.completed / data.total) * 100) : 0}% of all tasks`,
       tone: user?.role === 'ADMIN' ? 'cyan' : 'green',
     },
   ];
@@ -138,6 +155,49 @@ export function Dashboard() {
       </div>
       <div className="dashboard-columns">
         <div className="dashboard-primary">
+          <section className="panel workload-panel">
+            <div className="section-heading">
+              <div>
+                <h2>
+                  {user?.role === 'ADMIN'
+                    ? 'Task Status'
+                    : isProjectManager
+                      ? 'Tasks by Priority'
+                      : 'Work at a glance'}
+                </h2>
+                <p>
+                  {user?.role === 'ADMIN'
+                    ? 'A clear view of every task in the workspace.'
+                    : isProjectManager
+                      ? 'Know where your team’s attention is needed.'
+                      : 'Small steps, steady momentum.'}
+                </p>
+              </div>
+            </div>
+            <div className="status-breakdown">
+              {(isProjectManager ? (['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'] as const) : statuses).map(
+                (value) => {
+                  const count =
+                    (isProjectManager
+                      ? data.by_priority.find((p) => p.priority === value)?.count
+                      : data.by_status.find((s) => s.status === value)?.count) ?? 0;
+                  return (
+                    <div key={value}>
+                      <div>
+                        <span>{labels[value]}</span>
+                        <strong>{count}</strong>
+                      </div>
+                      <div className={`mini-bar ${value.toLowerCase()}`}>
+                        <span
+                          style={{ width: `${data.total ? (count / data.total) * 100 : 0}%` }}
+                        />
+                      </div>
+                    </div>
+                  );
+                },
+              )}
+            </div>
+          </section>
           <section>
             <div className="section-heading">
               <div>
@@ -205,48 +265,6 @@ export function Dashboard() {
             ) : (
               <Empty title="Some breathing room" description="No open tasks are due this week." />
             )}
-          </section>
-          <section className="panel workload-panel">
-            <div className="section-heading">
-              <div>
-                <h2>
-                  {user?.role === 'ADMIN'
-                    ? 'Task Status'
-                    : user?.role === 'PROJECT_MANAGER'
-                      ? 'Priority breakdown'
-                      : 'Work at a glance'}
-                </h2>
-                <p>
-                  {user?.role === 'ADMIN'
-                    ? 'A clear view of every task in the workspace.'
-                    : user?.role === 'PROJECT_MANAGER'
-                    ? 'Know where your team’s attention is needed.'
-                    : 'Small steps, steady momentum.'}
-                </p>
-              </div>
-            </div>
-            <div className="status-breakdown">
-              {(user?.role === 'PROJECT_MANAGER'
-                ? (['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'] as const)
-                : statuses
-              ).map((value) => {
-                const count =
-                  (user?.role === 'PROJECT_MANAGER'
-                    ? data.by_priority.find((p) => p.priority === value)?.count
-                    : data.by_status.find((s) => s.status === value)?.count) ?? 0;
-                return (
-                  <div key={value}>
-                    <div>
-                      <span>{labels[value]}</span>
-                      <strong>{count}</strong>
-                    </div>
-                    <div className={`mini-bar ${value.toLowerCase()}`}>
-                      <span style={{ width: `${data.total ? (count / data.total) * 100 : 0}%` }} />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
           </section>
         </div>
         <aside className="dashboard-aside">

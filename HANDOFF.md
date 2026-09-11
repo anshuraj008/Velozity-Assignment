@@ -29,8 +29,9 @@ Last updated: 2026-09-11
 
 ## Current checkpoint
 
-- Updating the Admin dashboard to show role-specific metrics: Projects, Total tasks, Overdue, and live Online now presence, plus an explicit Task Status section.
-- Reusing the existing WebSocket presence count and dashboard `by_status` response; no server or shared-contract changes are expected.
+- Updated the PM dashboard in `apps/web/src/pages/dashboard.tsx` with PM-specific summary cards: My projects, Open tasks, High/Critical, and Due this week.
+- Moved and renamed the PM priority section to `Tasks by Priority`; it continues to use the existing `by_priority` dashboard response and remains data-driven.
+- No server or shared-contract changes were needed. Admin and developer dashboard metrics remain unchanged.
 
 ## Verification
 
@@ -58,6 +59,7 @@ Last updated: 2026-09-11
 - Comprehensive UI overhaul in [`apps/web/src/styles.css`](file:///c:/Projects/Velozity-Assignment/apps/web/src/styles.css): modern Plus Jakarta Sans/Inter typography, vibrant gradient stat card icons, smooth hover lift transitions (`translateY(-3px)` with ambient glow), interactive button scale effects, glassmorphic modals with backdrop blur, pulsing live status badges, smooth page entrance animations, and responsive layouts.
 - Added **Team members** (`/team`) navigation link and directory access for **Project Managers** (`PROJECT_MANAGER`) in [`apps/web/src/components/shell.tsx`](file:///c:/Projects/Velozity-Assignment/apps/web/src/components/shell.tsx), [`apps/web/src/main.tsx`](file:///c:/Projects/Velozity-Assignment/apps/web/src/main.tsx), and [`apps/web/src/pages/directory.tsx`](file:///c:/Projects/Velozity-Assignment/apps/web/src/pages/directory.tsx). Admins retain exclusive user mutation capabilities (create/edit/deactivate).
 - Verified: `npm run typecheck`, `npm run build`, and `npm test` (26/26 tests passed).
+- PM dashboard change verified with `npm run typecheck -w @velozity/web`, source diagnostics, and the Maya mobile Playwright workflow: 1 test passed.
 - Docker is not installed; container execution and external deployment have not been verified. No pushes or external deployments have been made.
 
 ## Future checkpoint contents
