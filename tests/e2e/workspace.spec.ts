@@ -102,6 +102,10 @@ test('admin can create and clean up a client and project through forms', async (
   await login(page);
   const name = `Browser check ${Date.now()}`;
   await page.getByRole('link', { name: 'Clients', exact: true }).click();
+  await page.getByLabel('Search clients').fill('Forma Studio');
+  await expect(page.getByRole('cell', { name: 'Olivia Martin', exact: true })).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'Ethan Park', exact: true })).toHaveCount(0);
+  await page.getByLabel('Search clients').fill('');
   await page.getByRole('button', { name: 'Add client', exact: true }).click();
   const dialog = page.getByRole('dialog');
   await dialog.getByLabel('Contact name').fill(name);
@@ -118,6 +122,7 @@ test('admin can create and clean up a client and project through forms', async (
   await dialog.getByRole('button', { name: 'Create project', exact: true }).click();
   await expect(dialog).toHaveCount(0);
   await page.locator('.project-card').filter({ hasText: name }).click();
+  await page.getByRole('button', { name: 'Tasks', exact: true }).click();
   await page.getByRole('button', { name: 'Add task', exact: true }).click();
   await dialog.getByLabel('Title', { exact: true }).fill('Verify the new task workflow');
   await dialog

@@ -12,7 +12,16 @@ export function Directory({ kind }: { kind: 'clients' | 'users' }) {
   const [adding, setAdding] = useState(false);
   const [edit, setEdit] = useState<User | Client | null>(null);
   const [confirm, setConfirm] = useState<User | Client | null>(null);
+  const [search, setSearch] = useState('');
   const query = useQuery({ queryKey: [kind], queryFn: () => api<(User | Client)[]>(`/${kind}`) });
+  const records =
+    query.data?.filter((record) => {
+      if (kind !== 'clients' || !search.trim()) return true;
+      const client = record as Client;
+      return `${client.name} ${client.email} ${client.company}`
+        .toLowerCase()
+        .includes(search.trim().toLowerCase());
+    }) ?? [];
   const change = useMutation({
     mutationFn: (record: User | Client) =>
       api(
@@ -47,6 +56,17 @@ export function Directory({ kind }: { kind: 'clients' | 'users' }) {
           </button>
         )}
       </div>
+      {kind === 'clients' && (
+        <div className="page-toolbar client-toolbar">
+          <span>{query.data?.length ?? 0} clients in your workspace</span>
+          <input
+            aria-label="Search clients"
+            placeholder="Find a client, email, or company…"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </div>
+      )}
       <section className="panel">
         {query.isPending ? (
           <Loading />
@@ -56,6 +76,11 @@ export function Directory({ kind }: { kind: 'clients' | 'users' }) {
           <Empty
             title="Let’s make a connection"
             description="Add the first entry to get started."
+          />
+        ) : !records.length ? (
+          <Empty
+            title="No matching clients"
+            description="Try a different name, email, or company search."
           />
         ) : (
           <div className="table-scroll">
@@ -70,7 +95,7 @@ export function Directory({ kind }: { kind: 'clients' | 'users' }) {
                 </tr>
               </thead>
               <tbody>
-                {query.data.map((record) => (
+                {records.map((record) => (
                   <tr key={record.id}>
                     <td>
                       <span className="assignee-cell">

@@ -68,7 +68,9 @@ Last updated: 2026-09-11
 - Project detail change verified with Prettier, `npm run typecheck -w @velozity/web`, and the strengthened admin project-detail browser workflow: 1 test passed.
 - Added a reusable right-side task detail drawer in `apps/web/src/components/ui.tsx` and `apps/web/src/pages/tasks.tsx`. It shows task priority, status, assignee, due date, overdue state, description, and task activity; developers retain status-only editing because the existing Edit task control remains hidden for them.
 - Added optional task filtering to the existing authenticated activity endpoint across `packages/shared`, the work route, and repository. No separate activity workflow or permission model was introduced.
+- Added client search across name, email, and company in `apps/web/src/pages/directory.tsx`, including a clear no-match state. Client detail navigation was intentionally not added because it is lower priority than realtime/RBAC and there is no existing detail endpoint or route.
 - Task drawer change verified with Prettier, full `npm run typecheck`, and the developer realtime Playwright workflow: 1 test passed. `npm test` reached Vitest but the Windows process crashed with a native out-of-memory error before tests executed; rerun when system memory is available.
+- Client search verified with Prettier and full `npm run typecheck`. The updated client/project browser workflow reached client cleanup but timed out while the existing delete request remained in `Saving...`; the screenshot confirmed search and the new project-tab navigation had already passed.
 - Docker is not installed; container execution and external deployment have not been verified. No pushes or external deployments have been made.
 
 ## Future checkpoint contents
