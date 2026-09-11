@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { ArrowRight, Eye, EyeOff, Check, Activity } from 'lucide-react';
 import { useAuth } from '../lib/auth';
 import { ErrorNotice } from '../components/ui';
+import { FlowDeskLogo } from '../components/logo';
 export function Login() {
   const { login } = useAuth();
   const [error, setError] = useState<unknown>(null);
@@ -24,7 +25,7 @@ export function Login() {
     <div className="login-page">
       <section className="login-story">
         <div className="brand">
-          <span className="brand-mark">v</span>velozity.
+          <FlowDeskLogo size={36} />
         </div>
         <div className="login-story-content">
           <span className="eyebrow">ONE TEAM. A SHARED PICTURE.</span>

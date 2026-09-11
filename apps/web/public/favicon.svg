@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="12" fill="#5968ed"/><path d="m10 12 10 17 10-17h-7l-3 6-3-6z" fill="white"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <defs>
+    <linearGradient id="fd-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="50%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+  </defs>
+  <rect width="40" height="40" rx="11" fill="url(#fd-grad)" />
+  <!-- Modern Geometric Flow Mark -->
+  <path d="M11 11h18c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5H15v4.5h11c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5H15V28c0 .83-.67 1.5-1.5 1.5S12 28.83 12 28V12.5c0-.83.67-1.5 1.5-1.5z" fill="#ffffff" />
+  <circle cx="25" cy="26" r="3" fill="#38BDF8" />
+</svg>

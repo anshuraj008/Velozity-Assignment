@@ -141,29 +141,44 @@ form {
   display: flex;
   align-items: center;
   font-family: 'Manrope', sans-serif;
-  font-size: 27px;
-  font-weight: 800;
-  letter-spacing: -1.2px;
-  padding: 0 10px;
+  padding: 0 6px;
+  text-decoration: none;
 }
-.brand-mark {
-  width: 31px;
-  height: 32px;
+.flowdesk-brand-wrapper {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: var(--accent);
-  border-radius: 9px;
-  color: #fff;
-  font-size: 27px;
-  font-weight: 800;
-  font-style: italic;
-  margin-right: 9px;
-  padding-right: 3px;
-  line-height: 1;
+  gap: 10px;
 }
-.brand-period {
-  color: var(--accent);
+.flowdesk-brand-icon {
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 8px rgba(79, 70, 229, 0.28));
+  transition: transform 0.2s ease;
+}
+.brand:hover .flowdesk-brand-icon {
+  transform: scale(1.05) rotate(-2deg);
+}
+.flowdesk-brand-text {
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.9px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+}
+.flowdesk-brand-flow {
+  color: #1a1d2d;
+  font-weight: 800;
+}
+.flowdesk-brand-desk {
+  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+.flowdesk-brand-dot {
+  color: #06b6d4;
+  font-weight: 800;
 }
 .workspace-switch {
   display: flex;

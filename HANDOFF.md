@@ -49,6 +49,7 @@ Last updated: 2026-09-11
 - Added responsive task-table containment in apps/web/src/styles.css: narrow screens use a fixed three-column view and hide secondary columns to prevent document overflow.
 - The detached `npm run dev` verification process was stopped on 2026-09-11 after it blocked a subsequent interactive `npm run dev` with Vite port `5173` in use. Ports 4000 and 5173 were confirmed clear; start services interactively with `npm run dev`. Logs remain ignored at `.local/dev.log` and `.local/dev-error.log`.
 - Populated the ignored root `.env` with generated Docker Compose database/JWT/seed credentials and `APP_ORIGIN=http://localhost:8080`. The existing `apps/server/.env` keeps its valid Neon development database and local API origin; `apps/web/.env` remains `VITE_API_URL=` so Vite/nginx same-origin proxies handle API and Socket.IO traffic.
+- Implemented a human-friendly development log stream in `apps/server/src/lib/logger.ts` and `apps/server/src/app.ts` that converts raw JSON logs into formatted, colorized one-line terminal messages (`[API] HH:MM:SS -> 200 GET /api/... (duration)`), and silenced transient `ECONNABORTED`/`ECONNRESET` proxy errors on page refresh in `apps/web/vite.config.ts`. Vitest integration test suite passed 26/26 tests.
 - Docker is not installed; container execution and external deployment have not been verified. No pushes or external deployments have been made.
 
 ## Future checkpoint contents

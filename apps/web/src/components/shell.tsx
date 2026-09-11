@@ -21,6 +21,7 @@ import { useAuth } from '../lib/auth';
 import { useLive } from '../lib/live';
 import { api, json } from '../lib/api';
 import { Avatar, Modal, Empty, ErrorNotice, Loading, relativeDate } from './ui';
+import { FlowDeskLogo } from './logo';
 
 export function Shell() {
   const { user, logout } = useAuth();
@@ -66,7 +67,7 @@ export function Shell() {
       )}
       <aside className={`sidebar ${navOpen ? 'open' : ''}`}>
         <Link className="brand" to="/">
-          <span className="brand-mark">v</span>velozity<span className="brand-period">.</span>
+          <FlowDeskLogo size={32} />
         </Link>
         <div className="workspace-switch">
           <div className="workspace-icon">
@@ -155,7 +156,7 @@ export function Shell() {
           <Outlet />
         </main>
         <footer className="app-footer">
-          <span>Velozity workspace</span>
+          <span>FlowDesk workspace</span>
           <span>Good work happens together.</span>
         </footer>
       </div>

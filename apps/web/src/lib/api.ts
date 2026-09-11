@@ -38,7 +38,7 @@ export function refreshSession() {
       });
     // Cookies are shared across tabs. Serialize rotation there as well as within this tab.
     const request = (async () => {
-      if (navigator.locks) return await navigator.locks.request('velozity-refresh', requestRefresh);
+      if (navigator.locks) return await navigator.locks.request('flowdesk-refresh', requestRefresh);
       return requestRefresh();
     })();
     refreshPromise = request

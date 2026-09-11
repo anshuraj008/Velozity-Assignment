@@ -18,8 +18,26 @@ export function createApp(realtime: Realtime) {
   const app = express();
   app.disable('x-powered-by');
   app.set('trust proxy', env.TRUST_PROXY);
-  app.use(pinoHttp({ logger, genReqId: () => randomUUID() }));
-  app.use(helmet());
+  app.use(
+    pinoHttp({
+      logger,
+      genReqId: () => randomUUID(),
+      serializers: {
+        req: (req) => ({
+          id: req.id,
+          method: req.method,
+          url: req.url,
+        }),
+        res: (res) => ({
+          statusCode: res.statusCode,
+        }),
+      },
+      customSuccessMessage: (req, res, responseTime) =>
+        `${req.method} ${req.url} -> ${res.statusCode} (${responseTime}ms)`,
+      customErrorMessage: (req, res, err) =>
+        `${req.method} ${req.url} -> ${res.statusCode} (Error: ${err.message})`,
+    }),
+  );
   app.use(cors({ origin: allowedOrigins, credentials: true }));
   app.use(express.json({ limit: '32kb' }));
   app.use(cookieParser());
