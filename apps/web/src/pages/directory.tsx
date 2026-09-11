@@ -40,10 +40,12 @@ export function Directory({ kind }: { kind: 'clients' | 'users' }) {
               : 'A shared space for the people making it happen.'}
           </p>
         </div>
-        <button className="button primary" onClick={() => setAdding(true)}>
-          <Plus size={17} />
-          {kind === 'clients' ? 'Add client' : 'Add member'}
-        </button>
+        {user?.role === 'ADMIN' && (
+          <button className="button primary" onClick={() => setAdding(true)}>
+            <Plus size={17} />
+            {kind === 'clients' ? 'Add client' : 'Add member'}
+          </button>
+        )}
       </div>
       <section className="panel">
         {query.isPending ? (
@@ -64,7 +66,7 @@ export function Directory({ kind }: { kind: 'clients' | 'users' }) {
                   <th>Email</th>
                   <th>{kind === 'clients' ? 'Company' : 'Role'}</th>
                   {kind === 'users' && <th>Status</th>}
-                  <th>Actions</th>
+                  {user?.role === 'ADMIN' && <th>Actions</th>}
                 </tr>
               </thead>
               <tbody>
@@ -91,32 +93,34 @@ export function Directory({ kind }: { kind: 'clients' | 'users' }) {
                         </span>
                       </td>
                     )}
-                    <td>
-                      <div className="inline-actions">
-                        <button
-                          className="icon-button"
-                          aria-label={`Edit ${record.name}`}
-                          onClick={() => setEdit(record)}
-                        >
-                          <Pencil size={16} />
-                        </button>
-                        {record.id !== user?.id && (
+                    {user?.role === 'ADMIN' && (
+                      <td>
+                        <div className="inline-actions">
                           <button
                             className="icon-button"
-                            aria-label={`${kind === 'clients' ? 'Delete' : (record as User).is_active ? 'Deactivate' : 'Reactivate'} ${record.name}`}
-                            onClick={() => setConfirm(record)}
+                            aria-label={`Edit ${record.name}`}
+                            onClick={() => setEdit(record)}
                           >
-                            {kind === 'clients' ? (
-                              <Trash2 size={16} />
-                            ) : (record as User).is_active ? (
-                              <UserRoundX size={16} />
-                            ) : (
-                              <UserRoundCheck size={16} />
-                            )}
+                            <Pencil size={16} />
                           </button>
-                        )}
-                      </div>
-                    </td>
+                          {record.id !== user?.id && (
+                            <button
+                              className="icon-button"
+                              aria-label={`${kind === 'clients' ? 'Delete' : (record as User).is_active ? 'Deactivate' : 'Reactivate'} ${record.name}`}
+                              onClick={() => setConfirm(record)}
+                            >
+                              {kind === 'clients' ? (
+                                <Trash2 size={16} />
+                              ) : (record as User).is_active ? (
+                                <UserRoundX size={16} />
+                              ) : (
+                                <UserRoundCheck size={16} />
+                              )}
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

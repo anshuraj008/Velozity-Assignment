@@ -46,11 +46,9 @@ export function Shell() {
     { to: '/projects', label: 'Projects', icon: FolderKanban },
     { to: '/tasks', label: user.role === 'DEVELOPER' ? 'My tasks' : 'Tasks', icon: ListTodo },
     { to: '/activity', label: 'Activity', icon: Activity },
-    ...(user.role === 'ADMIN'
-      ? [
-          { to: '/clients', label: 'Clients', icon: Building2 },
-          { to: '/team', label: 'Team members', icon: Users },
-        ]
+    ...(user.role === 'ADMIN' ? [{ to: '/clients', label: 'Clients', icon: Building2 }] : []),
+    ...(user.role === 'ADMIN' || user.role === 'PROJECT_MANAGER'
+      ? [{ to: '/team', label: 'Team members', icon: Users }]
       : []),
   ];
   const current = links.find((l) =>

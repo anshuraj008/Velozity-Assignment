@@ -82,7 +82,11 @@ function App() {
           <Route
             path="team"
             element={
-              user.role === 'ADMIN' ? <Directory kind="users" /> : <Navigate to="/" replace />
+              user.role === 'ADMIN' || user.role === 'PROJECT_MANAGER' ? (
+                <Directory kind="users" />
+              ) : (
+                <Navigate to="/" replace />
+              )
             }
           />
           <Route path="*" element={<Navigate to="/" replace />} />
