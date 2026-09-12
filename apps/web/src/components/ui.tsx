@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { AlertCircle, LoaderCircle, X, ArrowUpRight } from 'lucide-react';
 import { labels, type Priority, type Status } from '@velozity/shared';
 export function Avatar({ name, small = false }: { name: string; small?: boolean }) {
@@ -20,11 +20,36 @@ export function Badge({ value }: { value: Status | Priority }) {
     </span>
   );
 }
-export function Loading() {
+export function Loading({ fullScreen = false }: { fullScreen?: boolean }) {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => setSeconds((s) => s + 1), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className="loading" role="status">
-      <LoaderCircle size={22} className="spin" />
-      <span>Loading workspace…</span>
+    <div className={`loading ${fullScreen ? 'loading-fullscreen' : ''}`} role="status">
+      <div className="loading-card">
+        <LoaderCircle size={26} className="spin" />
+        <span className="loading-title">
+          {seconds >= 3 ? 'Waking up server…' : 'Loading workspace…'}
+        </span>
+        {seconds >= 3 && (
+          <p className="loading-hint">
+            The free-tier backend instance spins down after inactivity and takes ~30–50s to wake up on first visit.
+          </p>
+        )}
+        {seconds >= 6 && (
+          <button
+            type="button"
+            className="button small-button loading-skip-btn"
+            onClick={() => window.dispatchEvent(new Event('session-expired'))}
+          >
+            Continue to Login
+          </button>
+        )}
+      </div>
     </div>
   );
 }

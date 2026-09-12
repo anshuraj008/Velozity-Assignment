@@ -47,7 +47,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean
 }
 function App() {
   const { user, loading } = useAuth();
-  if (loading) return <Loading />;
+  if (loading) return <Loading fullScreen />;
   if (!user) return <Login />;
   return (
     <LiveProvider>

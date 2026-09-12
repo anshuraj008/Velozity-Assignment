@@ -29,13 +29,17 @@ async function response<T>(res: Response): Promise<T> {
     );
   return body as T;
 }
-export function refreshSession() {
+export function refreshSession(timeoutMs = 10000) {
   if (!refreshPromise) {
-    const requestRefresh = () =>
-      fetch(`${apiOrigin}/api/auth/refresh`, {
+    const requestRefresh = () => {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
+      return fetch(`${apiOrigin}/api/auth/refresh`, {
         method: 'POST',
         credentials: 'include',
-      });
+        signal: controller.signal,
+      }).finally(() => clearTimeout(timer));
+    };
     // Cookies are shared across tabs. Serialize rotation there as well as within this tab.
     const request = (async () => {
       if (navigator.locks) return await navigator.locks.request('flowdesk-refresh', requestRefresh);

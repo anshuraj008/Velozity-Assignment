@@ -15,7 +15,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const cache = useQueryClient();
   useEffect(() => {
     let active = true;
-    void refreshSession()
+    void refreshSession(10000)
       .then((data) => {
         if (active) setUser(data.user);
       })
@@ -24,8 +24,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (active) setLoading(false);
       });
     const expired = () => {
-      setUser(null);
-      cache.clear();
+      if (active) {
+        setUser(null);
+        setLoading(false);
+        cache.clear();
+      }
     };
     window.addEventListener('session-expired', expired);
     return () => {
